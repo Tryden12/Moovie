@@ -1,9 +1,9 @@
 package com.tryden.moovi.network.response
 
-data class MovieNowPlayingResponse(
+data class NowPlayingPageResponse(
     val dates: Dates = Dates(),
     val page: Int = 0,
-    val results: List<Result> = listOf(),
+    val results: List<Result> = emptyList(),
     val total_pages: Int = 0,
     val total_results: Int = 0
 ) {

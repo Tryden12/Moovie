@@ -1,6 +1,6 @@
 package com.tryden.moovi.network
 
-import com.tryden.moovi.network.response.MovieNowPlayingResponse
+import com.tryden.moovi.network.response.NowPlayingPageResponse
 import com.tryden.moovi.network.service.MovieService
 import retrofit2.Response
 
@@ -8,8 +8,13 @@ class ApiClient(
     private val movieService: MovieService
 ) {
 
-    suspend fun getMoviesNowPlaying(): SimpleResponse<MovieNowPlayingResponse> {
+    suspend fun getMoviesNowPlaying(): SimpleResponse<NowPlayingPageResponse> {
         return safeApiCall { movieService.getMoviesNowPlaying() }
+    }
+
+    // Paging
+    suspend fun getNowPlayingMoviesPage(page: Int): SimpleResponse<NowPlayingPageResponse> {
+        return safeApiCall { movieService.getNowPlayingMoviesPage(page)}
     }
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): SimpleResponse<T> {

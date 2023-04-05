@@ -1,12 +1,9 @@
-package com.tryden.moovi
+package com.tryden.moovi.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.tryden.moovi.ui.MoviesViewModel
+import com.tryden.moovi.R
 
 class MainActivity : AppCompatActivity() {
 
