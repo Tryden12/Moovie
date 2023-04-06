@@ -4,6 +4,7 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.squareup.picasso.Picasso
 import com.tryden.moovi.R
+import com.tryden.moovi.databinding.ModelHeaderSectionTitleBinding
 import com.tryden.moovi.databinding.ModelMovieCardBinding
 import com.tryden.moovi.domain.NowPlayingItem
 import com.tryden.moovi.ui.epoxy.ViewBindingKotlinModel
@@ -12,15 +13,26 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @ObsoleteCoroutinesApi
 class NowPlayingEpoxyController(
 
-): PagingDataEpoxyController<NowPlayingItem>() {
+): PagingDataEpoxyController<NowPlayingUiModel>() {
 
-    override fun buildItemModel(currentPosition: Int, item: NowPlayingItem?): EpoxyModel<*> {
-        return NowPlayingGridItemEpoxyModel(
-            item = item!!,
-            onItemSelected = { itemId ->
-                // todo
+    override fun buildItemModel(currentPosition: Int, item: NowPlayingUiModel?): EpoxyModel<*> {
+        return when (item!!) {
+            is NowPlayingUiModel.Item -> {
+                val item = (item as NowPlayingUiModel.Item).item
+                NowPlayingGridItemEpoxyModel(
+                    item = item!!,
+                    onItemSelected = { itemId ->
+                        // todo
+                    }
+                ).id("nowplaying-${item.id}")
             }
-        ).id("nowplaying-${item.id}")
+            is NowPlayingUiModel.Header -> {
+                val headerText = (item as NowPlayingUiModel.Header).text
+                NowPlayingSectionTitleEpoxyModel(headerText)
+                    .spanSizeOverride{ _, _, _ -> 2 }
+                    .id("header_$headerText")
+            }
+        }
     }
 
     data class NowPlayingGridItemEpoxyModel(
@@ -33,6 +45,14 @@ class NowPlayingEpoxyController(
             releasedTextView.text = item.releaseDate
 
             root.setOnClickListener { onItemSelected(item.id) }
+        }
+    }
+
+    data class NowPlayingSectionTitleEpoxyModel(
+        val title: String
+    ): ViewBindingKotlinModel<ModelHeaderSectionTitleBinding>(R.layout.model_header_section_title) {
+        override fun ModelHeaderSectionTitleBinding.bind() {
+            titleTextView.text = title
         }
     }
 

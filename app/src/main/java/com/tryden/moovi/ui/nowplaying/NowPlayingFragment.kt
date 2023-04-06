@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.tryden.moovi.R
 import com.tryden.moovi.databinding.FragmentNowPlayingBinding
-import com.tryden.moovi.domain.NowPlayingItem
 import kotlinx.coroutines.flow.collectLatest
 
 class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
@@ -25,7 +24,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         val epoxyController = NowPlayingEpoxyController()
 
         lifecycleScope.launchWhenCreated {
-            viewModel.flow.collectLatest { pagingData: PagingData<NowPlayingItem> ->
+            viewModel.flow.collectLatest { pagingData: PagingData<NowPlayingUiModel> ->
                 epoxyController.submitData(pagingData)
             }
         }

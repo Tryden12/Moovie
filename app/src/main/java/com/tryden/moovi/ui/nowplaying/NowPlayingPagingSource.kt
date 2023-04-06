@@ -8,9 +8,9 @@ import com.tryden.moovi.network.NetworkLayer
 
 class NowPlayingPagingSource(
     private val repository: NowPlayingRepository
-) : PagingSource<Int, NowPlayingItem>(){
+) : PagingSource<Int, NowPlayingUiModel>(){
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NowPlayingItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NowPlayingUiModel> {
         val pageNumber = params.key ?: 1
         val previousKey = if (pageNumber == 1) null else pageNumber - 1
 
@@ -18,13 +18,15 @@ class NowPlayingPagingSource(
         pageRequest.exception?.let { return LoadResult.Error(it) }
 
         return LoadResult.Page(
-            data = pageRequest.body.results.map { NowPlayingMapper.buildFrom(it) },
+            data = pageRequest.body.results.map {
+                NowPlayingUiModel.Item(NowPlayingMapper.buildFrom(it))
+            },
             prevKey = previousKey,
             nextKey = pageNumber + 1 // todo clean this up?
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, NowPlayingItem>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, NowPlayingUiModel>): Int? {
         // Try to find the page key of the closest page to anchorPosition, from
         // either the prevKey or the nextKey, but you need to handle nullability
         // here:
