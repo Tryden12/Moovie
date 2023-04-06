@@ -1,10 +1,17 @@
 package com.tryden.moovi.ui
 
+import com.tryden.moovi.database.AppDatabase
+import com.tryden.moovi.database.dao.FavoriteDao
+import com.tryden.moovi.database.entity.FavoriteEntity
 import com.tryden.moovi.network.NetworkLayer
 import com.tryden.moovi.network.response.NowPlayingPageResponse
+import kotlinx.coroutines.flow.Flow
 
-class MoviesRepository {
+class MoviesRepository(
+    private val favoriteDao: FavoriteDao
+)  {
 
+    // region NowPlaying
     suspend fun getMoviesNowPlaying(): NowPlayingPageResponse? {
         val request = NetworkLayer.apiClient.getMoviesNowPlaying()
 
@@ -22,4 +29,13 @@ class MoviesRepository {
 
         return request.body
     }
+    // endregion NowPlaying
+
+
+    // region FavoriteEntity
+    fun getAllFavorites(): Flow<List<FavoriteEntity>> {
+        return favoriteDao.getAllFavorites()
+    }
+    // endregion FavoriteEntity
+
 }
