@@ -13,6 +13,10 @@ class ApiClient(
     }
 
     // Paging
+//    suspend fun getNowPlayingMoviesPage(page: Int): SimpleResponse<NowPlayingPageResponse> {
+//        return safeApiCall { movieService.getNowPlayingMoviesPage(page)}
+//    }
+
     suspend fun getNowPlayingMoviesPage(page: Int): SimpleResponse<NowPlayingPageResponse> {
         return safeApiCall { movieService.getNowPlayingMoviesPage(page)}
     }

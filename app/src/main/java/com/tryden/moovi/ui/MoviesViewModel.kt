@@ -1,23 +1,12 @@
 package com.tryden.moovi.ui
 
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.tryden.moovi.database.dao.FavoriteDao
 import com.tryden.moovi.database.entity.FavoriteEntity
-import com.tryden.moovi.domain.NowPlayingItem
-import com.tryden.moovi.network.response.NowPlayingPageResponse
-import com.tryden.moovi.ui.home.NowPlayingDataSourceFactory
-import com.tryden.moovi.util.Constants.PAGE_SIZE
-import com.tryden.moovi.util.Constants.PREFETCH_DISTANCE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,16 +40,6 @@ class MoviesViewModel @Inject constructor(
             }
         }
     }
-
-    private val pageListConfig: PagedList.Config = PagedList.Config.Builder()
-        .setPageSize(PAGE_SIZE)
-        .setPrefetchDistance(PREFETCH_DISTANCE) // needs to be 2-3x your page size
-        .build()
-
-    private val dataSourceFactory = NowPlayingDataSourceFactory(viewModelScope, repository)
-    val nowPlayingPagedListLiveData: LiveData<PagedList<NowPlayingItem>> =
-        LivePagedListBuilder(dataSourceFactory, pageListConfig).build()
-
     fun refreshNowPlaying() {
 //        viewModelScope.launch {
 //            val response = repository.getMoviesNowPlaying()
