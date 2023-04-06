@@ -8,8 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.tryden.moovi.R
 import com.tryden.moovi.databinding.FragmentNowPlayingBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
     private var _binding: FragmentNowPlayingBinding? = null

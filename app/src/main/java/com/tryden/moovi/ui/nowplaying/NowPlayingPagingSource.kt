@@ -22,7 +22,7 @@ class NowPlayingPagingSource(
                 NowPlayingUiModel.Item(NowPlayingMapper.buildFrom(it))
             },
             prevKey = previousKey,
-            nextKey = pageNumber + 1 // todo clean this up?
+            nextKey = pageNumber + 1
         )
     }
 
