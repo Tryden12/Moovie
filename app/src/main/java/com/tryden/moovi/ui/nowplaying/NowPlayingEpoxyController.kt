@@ -20,7 +20,7 @@ class NowPlayingEpoxyController(
             is NowPlayingUiModel.Item -> {
                 val item = (item as NowPlayingUiModel.Item).item
                 NowPlayingGridItemEpoxyModel(
-                    item = item!!,
+                    item = item,
                     onItemSelected = { itemId ->
                         // todo
                     }

@@ -27,7 +27,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic[2]" />
+                tools:src="@tools:sample/backgrounds/scenic[5]" />
+
 
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/titleTextView"
@@ -42,7 +43,7 @@
                android:textColor="@color/black"
                app:layout_constraintTop_toBottomOf="@id/imageImageView"
                app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
                tools:text="Operation Fortune: Ruse de Guerre" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -56,8 +57,17 @@
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+                tools:text="March 09, 2023" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/favoriteImageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_star_border_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Operation Fortune: Ruse de Guerre" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
