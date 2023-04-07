@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Moovi</string>
+
+    <!-- Custom Unfavorite Dialog -->
+    <string name="cancel">Cancel</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="description">This will permanently remove this movie from your favorites list.</string>
+    <string name="are_you_sure">Are you sure you want to remove this movie as a favorite? </string>
+    <string name="as_a_favorite"> as a favorite?</string>
+
 </resources>

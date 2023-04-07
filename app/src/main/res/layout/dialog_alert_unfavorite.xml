@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:background="@drawable/dialog_alert_bg">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:fontFamily="@font/opensans_semi_bold"
+        android:paddingEnd="18dp"
+        android:paddingStart="18dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/are_you_sure" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:fontFamily="@font/opensans_regular"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:text="@string/description"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height=".6dp"
+        android:background="@color/gray_200"
+        tool:layout_constraintBottom_toTopOf="@id/cancelDialogButton"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:layout_width=".6dp"
+        android:layout_height="0dp"
+        android:background="@color/gray_200"
+        tool:layout_constraintBottom_toBottomOf="parent"
+        tool:layout_constraintTop_toTopOf="@id/cancelDialogButton"
+        tool:layout_constraintStart_toEndOf="@id/cancelDialogButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/MaterialButton"
+        android:id="@+id/cancelDialogButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:letterSpacing="0"
+        tool:strokeColor="@android:color/transparent"
+        tool:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintEnd_toStartOf="@id/acceptDialogButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/MaterialButton"
+        android:id="@+id/acceptDialogButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_semi_bold"
+        android:textSize="18sp"
+        android:text="Unfavorite"
+        android:textAllCaps="false"
+        android:letterSpacing="0"
+        tool:strokeColor="@android:color/transparent"
+        tool:layout_constraintTop_toTopOf="@id/cancelDialogButton"
+        tool:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintStart_toEndOf="@id/cancelDialogButton"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
