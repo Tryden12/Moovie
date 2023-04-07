@@ -1,12 +1,10 @@
-package com.tryden.moovi.ui.nowplaying
+package com.tryden.moovi.ui.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.squareup.picasso.Picasso
 import com.tryden.moovi.R
-import com.tryden.moovi.application.MooviApplication
 import com.tryden.moovi.databinding.ModelHeaderSectionTitleBinding
 import com.tryden.moovi.databinding.ModelMovieCardBinding
 import com.tryden.moovi.domain.NowPlayingItem
@@ -37,7 +35,7 @@ class NowPlayingEpoxyController(
 
             favoriteCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 onFavoriteSelected(
-                    FavoriteSelected(item.id, isChecked)
+                    FavoriteSelected(item, isChecked)
                 )
             }
         }
@@ -52,7 +50,7 @@ class NowPlayingEpoxyController(
     }
 
     data class FavoriteSelected(
-        val id: String,
+        val item: NowPlayingItem,
         val isChecked: Boolean
     )
 

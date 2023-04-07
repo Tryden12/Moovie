@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 data class FavoriteEntity(
     @PrimaryKey val id: String = "",
     val title: String = "",
-    val description: String = "",
     val imageUrl: String = "",
     val releaseDate: String = ""
 )

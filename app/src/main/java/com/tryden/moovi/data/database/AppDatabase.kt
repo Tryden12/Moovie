@@ -10,7 +10,7 @@ import javax.inject.Provider
 
 @Database(
     entities = [FavoriteEntity::class],
-    version = 1
+    version = 2
 )
 
 abstract class AppDatabase : RoomDatabase() {

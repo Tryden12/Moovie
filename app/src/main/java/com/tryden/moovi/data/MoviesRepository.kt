@@ -3,7 +3,7 @@ package com.tryden.moovi.data
 import androidx.paging.*
 import com.tryden.moovi.data.database.dao.FavoriteDao
 import com.tryden.moovi.data.database.entity.FavoriteEntity
-import com.tryden.moovi.ui.nowplaying.NowPlayingPagingSource
+import com.tryden.moovi.ui.home.NowPlayingPagingSource
 import com.tryden.moovi.util.Constants.PAGE_SIZE
 import com.tryden.moovi.util.Constants.PREFETCH_DISTANCE
 import kotlinx.coroutines.flow.Flow

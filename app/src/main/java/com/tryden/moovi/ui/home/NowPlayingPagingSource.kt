@@ -1,4 +1,4 @@
-package com.tryden.moovi.ui.nowplaying
+package com.tryden.moovi.ui.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

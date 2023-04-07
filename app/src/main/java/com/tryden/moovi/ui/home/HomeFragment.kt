@@ -1,4 +1,4 @@
-package com.tryden.moovi.ui.nowplaying
+package com.tryden.moovi.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -9,22 +9,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.tryden.moovi.R
 import com.tryden.moovi.data.database.entity.FavoriteEntity
-import com.tryden.moovi.databinding.FragmentNowPlayingBinding
+import com.tryden.moovi.databinding.FragmentHomeBinding
 import com.tryden.moovi.domain.NowPlayingItem
+import com.tryden.moovi.ui.home.NowPlayingEpoxyController.FavoriteSelected
 import com.tryden.moovi.ui.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private var _binding: FragmentNowPlayingBinding? = null
-    val binding: FragmentNowPlayingBinding get() = _binding!!
+    private var _binding: FragmentHomeBinding? = null
+    val binding: FragmentHomeBinding get() = _binding!!
 
-//    private val viewModel: NowPlayingViewModel by viewModels()
     private val viewModel: MoviesViewModel by viewModels()
-
 
     val epoxyController = NowPlayingEpoxyController(::onFavoriteSelected)
 
@@ -32,7 +31,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
     @OptIn(ObsoleteCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentNowPlayingBinding.bind(view)
+        _binding = FragmentHomeBinding.bind(view)
 
         lifecycleScope.launchWhenCreated {
             viewModel.favoriteMovies.collectLatest {
@@ -56,22 +55,32 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
     }
 
     @OptIn(ObsoleteCoroutinesApi::class)
-    private fun onFavoriteSelected(favoriteSelected: NowPlayingEpoxyController.FavoriteSelected) {
-        Log.e("NowPlayingFragment", "onFavoriteSelected: ${favoriteSelected.id}" )
+    private fun onFavoriteSelected(favoriteSelected: FavoriteSelected) {
+        Log.e("NowPlayingFragment", "onFavoriteSelected: ${favoriteSelected.item.id}" )
         if (favoriteSelected.isChecked) {
-            saveFavoriteMovieToDatabase(favoriteSelected.id)
+            saveFavoriteMovieToDatabase(favoriteSelected)
         } else {
-            deleteFavoriteMovieFromDatabase(favoriteSelected.id)
+            deleteFavoriteMovieFromDatabase(favoriteSelected)
         }
     }
 
-    private fun saveFavoriteMovieToDatabase(id: String) {
-        val favoriteEntity = FavoriteEntity( id = id )
+    private fun saveFavoriteMovieToDatabase(favorite: FavoriteSelected) {
+        val favoriteEntity = FavoriteEntity(
+            id = favorite.item.id,
+            title = favorite.item.title,
+            imageUrl = favorite.item.imageUrl,
+            releaseDate = favorite.item.releaseDate
+        )
         viewModel.addFavoriteMovie(favoriteEntity)
     }
 
-    private fun deleteFavoriteMovieFromDatabase(id: String) {
-        val favoriteEntity = FavoriteEntity( id = id )
+    private fun deleteFavoriteMovieFromDatabase(favorite: FavoriteSelected) {
+        val favoriteEntity = FavoriteEntity(
+            id = favorite.item.id,
+            title = favorite.item.title,
+            imageUrl = favorite.item.imageUrl,
+            releaseDate = favorite.item.releaseDate
+        )
         viewModel.deleteFavoriteMovie(favoriteEntity)
     }
 
