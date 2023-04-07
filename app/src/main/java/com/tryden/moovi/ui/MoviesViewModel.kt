@@ -19,7 +19,6 @@ class MoviesViewModel @Inject constructor(
     val nowPlayingMovies = repository.getNowPlayingMovies().cachedIn(viewModelScope)
 
     // region Favorites
-
     val updatedItemsHashMutableMap = mutableMapOf<FavoriteEntity, NowPlayingItem>()
     val favoriteMovies: Flow<List<FavoriteEntity>> = repository.getAllFavoriteMovies()
 
@@ -30,14 +29,5 @@ class MoviesViewModel @Inject constructor(
     fun deleteFavoriteMovie(favoriteEntity: FavoriteEntity) = viewModelScope.launch {
         repository.deleteFavoriteMovie(favoriteEntity)
     }
-
-    //    val nowPlayingFlow: Flow<List<NowPlayingItem>> = combine(favoriteDao.getAllFavorites(), flow) { favorites, items ->
-//        items.map { item ->
-//            NowPlayingItem(
-//                item = item,
-//                isFavorite = favorites.find { it.id == item.id.toString() } != null
-//            )
-//        }
-//    }
     // endregion Favorites
 }

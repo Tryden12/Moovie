@@ -26,6 +26,7 @@ class MoviesRepository @Inject constructor(private val favoriteDao: FavoriteDao)
             //Turn this pager into a stream of paging data to get live updates
         ).flow
 
+    // region Favorites
     fun getAllFavoriteMovies(): Flow<List<FavoriteEntity>> {
         return favoriteDao.getAllFavorites()
     }
@@ -37,4 +38,5 @@ class MoviesRepository @Inject constructor(private val favoriteDao: FavoriteDao)
     suspend fun deleteFavoriteMovie(favoriteEntity: FavoriteEntity) {
         favoriteDao.delete(favoriteEntity)
     }
+    // endregion Favorites
 }
