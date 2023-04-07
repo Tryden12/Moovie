@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.tryden.moovi.R
+import com.tryden.moovi.data.database.entity.FavoriteEntity
 import com.tryden.moovi.databinding.FragmentNowPlayingBinding
 import com.tryden.moovi.domain.NowPlayingItem
 import com.tryden.moovi.ui.MoviesViewModel
@@ -34,6 +35,18 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         _binding = FragmentNowPlayingBinding.bind(view)
 
         lifecycleScope.launchWhenCreated {
+            viewModel.favoriteMovies.collectLatest {
+                if (it.isNotEmpty()) {
+                    it.forEach { favoriteEntity ->
+                        Log.e("NowPlayingFragment", "favorite id: ${favoriteEntity.id} " )
+                    }
+                } else {
+                    Log.e("NowPlayingFragment", "favorite list is empty" )
+
+                }
+            }
+        }
+        lifecycleScope.launchWhenCreated {
             viewModel.nowPlayingMovies.collectLatest { pagingData: PagingData<NowPlayingItem> ->
                 epoxyController.submitData(pagingData)
             }
@@ -42,9 +55,24 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         binding.epoxyRecyclerView.setController(epoxyController)
     }
 
-    private fun onFavoriteSelected(id: String) {
-        Log.e("NowPlayingFragment", "onFavoriteSelected: $id", )
+    @OptIn(ObsoleteCoroutinesApi::class)
+    private fun onFavoriteSelected(favoriteSelected: NowPlayingEpoxyController.FavoriteSelected) {
+        Log.e("NowPlayingFragment", "onFavoriteSelected: ${favoriteSelected.id}" )
+        if (favoriteSelected.isChecked) {
+            saveFavoriteMovieToDatabase(favoriteSelected.id)
+        } else {
+            deleteFavoriteMovieFromDatabase(favoriteSelected.id)
+        }
+    }
 
+    private fun saveFavoriteMovieToDatabase(id: String) {
+        val favoriteEntity = FavoriteEntity( id = id )
+        viewModel.addFavoriteMovie(favoriteEntity)
+    }
+
+    private fun deleteFavoriteMovieFromDatabase(id: String) {
+        val favoriteEntity = FavoriteEntity( id = id )
+        viewModel.deleteFavoriteMovie(favoriteEntity)
     }
 
     override fun onDestroyView() {

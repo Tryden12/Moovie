@@ -9,8 +9,8 @@
     <color name="primaryColor">@color/gray_700</color>
     <color name="primaryDarkColor">@color/gray_800</color>
     <color name="secondaryLightColor">@color/rustLightColor</color>
-    <color name="secondaryColor">@color/rustColor</color>
-    <color name="secondaryDarkColor">@color/rustDarkColor</color>
+    <color name="secondaryColor">@color/blue_link</color>
+    <color name="secondaryDarkColor">@color/blue_link</color>
 
     <color name="gray_50">#FAFAFA</color>
     <color name="gray_100">#F5F5F5</color>
@@ -26,4 +26,8 @@
     <color name="rustColor">#753023</color>
     <color name="rustLightColor">#a85c4b</color>
     <color name="rustDarkColor">#450300</color>
+
+    <!-- Blues-->
+    <color name="blue_link">#0E86D4</color>
+    <color name="blue_highlight">#330E86D4</color>
 </resources>

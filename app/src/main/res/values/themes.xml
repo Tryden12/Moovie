@@ -18,4 +18,15 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/gray_900</item>
     </style>
+
+    <style name="MaterialButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <!-- Colors -->
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="rippleColor">?attr/colorSecondary</item>
+    </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_rounded_corners</item>
+    </style>
 </resources>

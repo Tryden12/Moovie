@@ -15,7 +15,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 @ObsoleteCoroutinesApi
 class NowPlayingEpoxyController(
-    private val onFavoriteSelected: (String) -> Unit
+    private val onFavoriteSelected: (FavoriteSelected) -> Unit
 ): PagingDataEpoxyController<NowPlayingItem>() {
 
     override fun buildItemModel(currentPosition: Int, item: NowPlayingItem?): EpoxyModel<*> {
@@ -27,7 +27,7 @@ class NowPlayingEpoxyController(
 
     data class NowPlayingGridItemEpoxyModel(
         val item: NowPlayingItem?,
-        val onFavoriteSelected: (String) -> Unit
+        val onFavoriteSelected: (FavoriteSelected) -> Unit
     ): ViewBindingKotlinModel<ModelMovieCardBinding>(R.layout.model_movie_card) {
         @SuppressLint("UseCompatLoadingForDrawables")
         override fun ModelMovieCardBinding.bind() {
@@ -36,7 +36,9 @@ class NowPlayingEpoxyController(
             releasedTextView.text = item.releaseDate
 
             favoriteCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                onFavoriteSelected(item.id)
+                onFavoriteSelected(
+                    FavoriteSelected(item.id, isChecked)
+                )
             }
         }
     }
@@ -48,5 +50,10 @@ class NowPlayingEpoxyController(
             titleTextView.text = title
         }
     }
+
+    data class FavoriteSelected(
+        val id: String,
+        val isChecked: Boolean
+    )
 
 }
