@@ -2,7 +2,7 @@ package com.tryden.moovi.di
 
 import android.app.Application
 import androidx.room.Room
-import com.tryden.moovi.database.AppDatabase
+import com.tryden.moovi.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

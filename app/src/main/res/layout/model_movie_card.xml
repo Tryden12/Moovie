@@ -43,7 +43,7 @@
                android:textColor="@color/black"
                app:layout_constraintTop_toBottomOf="@id/imageImageView"
                app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+               app:layout_constraintEnd_toStartOf="@id/favoriteCheckBox"
                tools:text="Operation Fortune: Ruse de Guerre" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -57,17 +57,18 @@
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+                app:layout_constraintEnd_toStartOf="@id/favoriteCheckBox"
                 tools:text="March 09, 2023" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/favoriteImageView"
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/favoriteCheckBox"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_star_border_24"
+                android:button="@drawable/favorite_selector"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

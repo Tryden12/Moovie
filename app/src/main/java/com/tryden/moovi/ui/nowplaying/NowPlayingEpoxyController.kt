@@ -1,9 +1,12 @@
 package com.tryden.moovi.ui.nowplaying
 
+import android.annotation.SuppressLint
+import android.util.Log
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.squareup.picasso.Picasso
 import com.tryden.moovi.R
+import com.tryden.moovi.application.MooviApplication
 import com.tryden.moovi.databinding.ModelHeaderSectionTitleBinding
 import com.tryden.moovi.databinding.ModelMovieCardBinding
 import com.tryden.moovi.domain.NowPlayingItem
@@ -12,39 +15,29 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 @ObsoleteCoroutinesApi
 class NowPlayingEpoxyController(
+    private val onFavoriteSelected: (String) -> Unit
+): PagingDataEpoxyController<NowPlayingItem>() {
 
-): PagingDataEpoxyController<NowPlayingUiModel>() {
-
-    override fun buildItemModel(currentPosition: Int, item: NowPlayingUiModel?): EpoxyModel<*> {
-        return when (item!!) {
-            is NowPlayingUiModel.Item -> {
-                val item = (item as NowPlayingUiModel.Item).item
-                NowPlayingGridItemEpoxyModel(
+    override fun buildItemModel(currentPosition: Int, item: NowPlayingItem?): EpoxyModel<*> {
+        return NowPlayingGridItemEpoxyModel(
                     item = item,
-                    onItemSelected = { itemId ->
-                        // todo
-                    }
-                ).id("nowplaying-${item.id}")
-            }
-            is NowPlayingUiModel.Header -> {
-                val headerText = (item as NowPlayingUiModel.Header).text
-                NowPlayingSectionTitleEpoxyModel(headerText)
-                    .spanSizeOverride{ _, _, _ -> 2 }
-                    .id("header_$headerText")
-            }
-        }
+                    onFavoriteSelected
+                ).id("nowplaying-${item!!.id}")
     }
 
     data class NowPlayingGridItemEpoxyModel(
-        val item: NowPlayingItem,
-        val onItemSelected: (String) -> Unit
+        val item: NowPlayingItem?,
+        val onFavoriteSelected: (String) -> Unit
     ): ViewBindingKotlinModel<ModelMovieCardBinding>(R.layout.model_movie_card) {
+        @SuppressLint("UseCompatLoadingForDrawables")
         override fun ModelMovieCardBinding.bind() {
-            Picasso.get().load(item.imageUrl).into(imageImageView)
+            Picasso.get().load(item!!.imageUrl).into(imageImageView)
             titleTextView.text = item.title
             releasedTextView.text = item.releaseDate
 
-            root.setOnClickListener { onItemSelected(item.id) }
+            favoriteCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                onFavoriteSelected(item.id)
+            }
         }
     }
 

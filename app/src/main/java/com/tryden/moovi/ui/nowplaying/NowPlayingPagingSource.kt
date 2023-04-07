@@ -5,28 +5,34 @@ import androidx.paging.PagingState
 import com.tryden.moovi.domain.NowPlayingItem
 import com.tryden.moovi.domain.NowPlayingMapper
 import com.tryden.moovi.network.NetworkLayer
+import com.tryden.moovi.util.Constants.STARTING_PAGE_INDEX
+import retrofit2.HttpException
+import java.io.IOException
 
-class NowPlayingPagingSource(
-    private val repository: NowPlayingRepository
-) : PagingSource<Int, NowPlayingUiModel>(){
+class NowPlayingPagingSource() : PagingSource<Int, NowPlayingItem>(){
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NowPlayingUiModel> {
-        val pageNumber = params.key ?: 1
-        val previousKey = if (pageNumber == 1) null else pageNumber - 1
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NowPlayingItem> {
+        val position = params.key ?: STARTING_PAGE_INDEX
+        val previousKey = if (position == 1) null else position - 1
 
-        val pageRequest = NetworkLayer.apiClient.getNowPlayingMoviesPage(pageNumber)
-        pageRequest.exception?.let { return LoadResult.Error(it) }
-
-        return LoadResult.Page(
-            data = pageRequest.body.results.map {
-                NowPlayingUiModel.Item(NowPlayingMapper.buildFrom(it))
-            },
-            prevKey = previousKey,
-            nextKey = pageNumber + 1
-        )
+        return try {
+            val response = NetworkLayer.apiClient.getNowPlayingMoviesPage(position)
+            val movies = response.body.results
+            LoadResult.Page(
+                data = movies.map {
+                    NowPlayingMapper.buildFrom(it)
+                },
+                prevKey = previousKey,
+                nextKey = position + 1
+            )
+        } catch (e: IOException) {
+            LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, NowPlayingUiModel>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, NowPlayingItem>): Int? {
         // Try to find the page key of the closest page to anchorPosition, from
         // either the prevKey or the nextKey, but you need to handle nullability
         // here:

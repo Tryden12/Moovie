@@ -1,4 +1,4 @@
-package com.tryden.moovi.database.entity
+package com.tryden.moovi.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

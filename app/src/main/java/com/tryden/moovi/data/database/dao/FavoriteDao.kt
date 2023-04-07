@@ -1,7 +1,7 @@
-package com.tryden.moovi.database.dao
+package com.tryden.moovi.data.database.dao
 
 import androidx.room.*
-import com.tryden.moovi.database.entity.FavoriteEntity
+import com.tryden.moovi.data.database.entity.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
